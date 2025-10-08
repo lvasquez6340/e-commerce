@@ -93,7 +93,7 @@ a:focus-visible, .menu-icon:focus-visible, .btn:focus-visible{
   gap:20px;
 }
 
-/* Card clara, consistente con contacto */
+/* Card clara, consistente con la pagina de contacto */
 .card{
   background:#fff;
   border:1px solid var(--borde);
@@ -139,7 +139,7 @@ input:focus, textarea:focus{
 .btn:active{ transform:scale(.98); }
 
 /* =========================
-   Footer (igual al de contacto)
+   Footer 
 ========================= */
 .footer{
   background:var(--azul-osc); color:#fff;
