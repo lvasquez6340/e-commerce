@@ -1,88 +1,26 @@
-// js/carrito.js
-// ===============================
-// Lógica de la página carrito.html
-// ===============================
-
-// Estado global del carrito
+// ================================
+//  Estado global del carrito
+// ================================
 let carrito = [];
 
-// Cuando carga el DOM
+// ================================
+//  Cargar carrito al iniciar página
+// ================================
 document.addEventListener("DOMContentLoaded", () => {
-  // 1) Recuperar carrito desde localStorage
   const guardado = localStorage.getItem("carrito");
   carrito = guardado ? JSON.parse(guardado) : [];
 
-  // 2) Actualizar contador del navbar
   actualizarContador();
-
-  // 3) Dibujar productos en el carrito
   renderizarCarrito();
 
-  // 4) Botón "Vaciar carrito"
-  const btnVaciar = document.getElementById("btn-vaciar-carrito");
-  if (btnVaciar) {
-    btnVaciar.addEventListener("click", () => {
-      if (carrito.length === 0) {
-        mostrarToast("El carrito ya está vacío", "error");
-        return;
-      }
-
-      const confirma = confirm("¿Seguro que querés vaciar todo el carrito?");
-      if (!confirma) return;
-
-      carrito = [];
-      guardarCarrito();
-      actualizarContador();
-      renderizarCarrito();
-      mostrarToast("Carrito vaciado ✅", "ok");
-    });
-  }
-
-  // 5) Botón "Finalizar compra"
-  const btnFinalizar = document.getElementById("btn-finalizar");
-  if (btnFinalizar) {
-    btnFinalizar.addEventListener("click", () => {
-      if (carrito.length === 0) {
-        mostrarToast("Tu carrito está vacío. Agregá algún producto primero.", "error");
-        return;
-      }
-
-      const confirma = confirm(
-        "¿Querés finalizar la compra?\n(No hay integración real, es una simulación para el proyecto.)"
-      );
-      if (!confirma) return;
-
-      // Acá podrías integrar Mercado Pago en el futuro
-      // Por ahora simulamos:
-      mostrarToast("Compra finalizada 🎉 (simulada para el proyecto)", "ok");
-
-      // Si querés, dejamos el carrito limpio después:
-      carrito = [];
-      guardarCarrito();
-      actualizarContador();
-      renderizarCarrito();
-    });
-  }
+  prepararBotonVaciar();
+  prepararBotonFinalizar();
 });
 
-// =====================
-// Utilidades
-// =====================
 
-function guardarCarrito() {
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-}
-
-function obtenerCantidadTotal() {
-  return carrito.reduce((acc, item) => acc + item.cantidad, 0);
-}
-
-function actualizarContador() {
-  const span = document.getElementById("cart-count");
-  if (!span) return;
-  span.textContent = obtenerCantidadTotal();
-}
-
+// ================================
+//  Función: renderizar carrito
+// ================================
 function renderizarCarrito() {
   const contenedor = document.getElementById("cart-items");
   const totalElem  = document.getElementById("cart-total");
@@ -100,13 +38,13 @@ function renderizarCarrito() {
   let total = 0;
 
   carrito.forEach(item => {
-    const fila = document.createElement("div");
-    fila.classList.add("cart-item");
+    const row = document.createElement("div");
+    row.classList.add("cart-item");
 
     const subtotal = item.precio * item.cantidad;
     total += subtotal;
 
-    fila.innerHTML = `
+    row.innerHTML = `
       <span>${item.marca} ${item.modelo}</span>
       <span>x${item.cantidad}</span>
       <span>$${subtotal.toLocaleString()}</span>
@@ -115,45 +53,106 @@ function renderizarCarrito() {
       </button>
     `;
 
-    contenedor.appendChild(fila);
+    contenedor.appendChild(row);
   });
 
   totalElem.textContent = "Total: $" + total.toLocaleString();
 
-  // Eventos para botones de eliminar
-  const botonesEliminar = contenedor.querySelectorAll(".btn-eliminar");
-  botonesEliminar.forEach(btn => {
+  activarBotonesEliminar();
+}
+
+
+// ================================
+//  Botones "Eliminar"
+// ================================
+function activarBotonesEliminar() {
+  const botones = document.querySelectorAll(".btn-eliminar");
+
+  botones.forEach(btn => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.id);
-
-      const confirma = confirm("¿Seguro que querés eliminar este producto del carrito?");
-      if (!confirma) return;
-
-      carrito = carrito.filter(item => item.id !== id);
-      guardarCarrito();
-      actualizarContador();
-      renderizarCarrito();
-      mostrarToast("Producto eliminado del carrito", "ok");
+      eliminarProducto(id);
     });
   });
 }
 
-// =====================
-// Toast / notificación
-// =====================
+function eliminarProducto(idToRemove) {
+  const confirmar = confirm("¿Seguro que deseas eliminar este producto?");
+  if (!confirmar) return;
 
-function mostrarToast(mensaje, tipo = "ok") {
-  const toast = document.getElementById("toast");
-  if (!toast) {
-    alert(mensaje); // último recurso
-    return;
-  }
+  carrito = carrito.filter(item => item.id !== idToRemove);
+  guardarCarrito();
+  actualizarContador();
+  renderizarCarrito();
+}
 
-  toast.textContent = mensaje;
-  toast.classList.remove("hidden", "ok", "error");
-  toast.classList.add("show", tipo);
 
-  setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
+// ================================
+//  Botón "Vaciar Carrito"
+// ================================
+function prepararBotonVaciar() {
+  const btn = document.getElementById("btn-vaciar-carrito");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    const confirmar = confirm("¿Seguro que deseas vaciar todo el carrito?");
+    if (!confirmar) return;
+
+    carrito = [];
+    guardarCarrito();
+    actualizarContador();
+    renderizarCarrito();
+  });
+}
+
+
+// ================================
+//  Botón "Finalizar compra"
+// ================================
+function prepararBotonFinalizar() {
+  const btn = document.getElementById("btn-finalizar");
+  if (!btn) return;
+
+  btn.addEventListener("click", () => {
+    if (carrito.length === 0) {
+      alert("Tu carrito está vacío 🛒");
+      return;
+    }
+
+    const total = carrito.reduce(
+      (acc, item) => acc + item.precio * item.cantidad,
+      0
+    );
+
+    const confirmar = confirm(
+      `Vas a simular un pago por $${total.toLocaleString()}.\n\n¿Deseas continuar?`
+    );
+
+    if (!confirmar) return;
+
+    // Simulación mercado pago
+    window.open("https://www.mercadopago.com.ar", "_blank");
+
+    // Vaciar carrito luego de "pagar"
+    carrito = [];
+    guardarCarrito();
+    actualizarContador();
+    renderizarCarrito();
+  });
+}
+
+
+// ================================
+//  Funciones auxiliares
+// ================================
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function actualizarContador() {
+  const span = document.getElementById("cart-count");
+  if (!span) return;
+
+  const cant = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  span.textContent = cant;
 }
