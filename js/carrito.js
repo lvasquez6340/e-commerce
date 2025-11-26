@@ -1,12 +1,24 @@
+// js/carrito.js
+// ===============================
+// Lógica de la página carrito.html
+// ===============================
+
+// Estado global del carrito
 let carrito = [];
 
+// Cuando carga el DOM
 document.addEventListener("DOMContentLoaded", () => {
-  const data = localStorage.getItem("carrito");
-  carrito = data ? JSON.parse(data) : [];
+  // 1) Recuperar carrito desde localStorage
+  const guardado = localStorage.getItem("carrito");
+  carrito = guardado ? JSON.parse(guardado) : [];
 
+  // 2) Actualizar contador del navbar
   actualizarContador();
+
+  // 3) Dibujar productos en el carrito
   renderizarCarrito();
 
+  // 4) Botón "Vaciar carrito"
   const btnVaciar = document.getElementById("btn-vaciar-carrito");
   if (btnVaciar) {
     btnVaciar.addEventListener("click", () => {
@@ -14,25 +26,62 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarToast("El carrito ya está vacío", "error");
         return;
       }
+
+      const confirma = confirm("¿Seguro que querés vaciar todo el carrito?");
+      if (!confirma) return;
+
       carrito = [];
-      localStorage.setItem("carrito", JSON.stringify(carrito));
+      guardarCarrito();
       actualizarContador();
       renderizarCarrito();
-      mostrarToast("Carrito vaciado", "ok");
+      mostrarToast("Carrito vaciado ✅", "ok");
     });
   }
 
+  // 5) Botón "Finalizar compra"
   const btnFinalizar = document.getElementById("btn-finalizar");
   if (btnFinalizar) {
     btnFinalizar.addEventListener("click", () => {
       if (carrito.length === 0) {
-        mostrarToast("No tienes productos en el carrito", "error");
+        mostrarToast("Tu carrito está vacío. Agregá algún producto primero.", "error");
         return;
       }
-      mostrarToast("Compra simulada con éxito 😄", "ok");
+
+      const confirma = confirm(
+        "¿Querés finalizar la compra?\n(No hay integración real, es una simulación para el proyecto.)"
+      );
+      if (!confirma) return;
+
+      // Acá podrías integrar Mercado Pago en el futuro
+      // Por ahora simulamos:
+      mostrarToast("Compra finalizada 🎉 (simulada para el proyecto)", "ok");
+
+      // Si querés, dejamos el carrito limpio después:
+      carrito = [];
+      guardarCarrito();
+      actualizarContador();
+      renderizarCarrito();
     });
   }
 });
+
+// =====================
+// Utilidades
+// =====================
+
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function obtenerCantidadTotal() {
+  return carrito.reduce((acc, item) => acc + item.cantidad, 0);
+}
+
+function actualizarContador() {
+  const span = document.getElementById("cart-count");
+  if (!span) return;
+  span.textContent = obtenerCantidadTotal();
+}
 
 function renderizarCarrito() {
   const contenedor = document.getElementById("cart-items");
@@ -51,13 +100,13 @@ function renderizarCarrito() {
   let total = 0;
 
   carrito.forEach(item => {
-    const row = document.createElement("div");
-    row.classList.add("cart-item");
+    const fila = document.createElement("div");
+    fila.classList.add("cart-item");
 
     const subtotal = item.precio * item.cantidad;
     total += subtotal;
 
-    row.innerHTML = `
+    fila.innerHTML = `
       <span>${item.marca} ${item.modelo}</span>
       <span>x${item.cantidad}</span>
       <span>$${subtotal.toLocaleString()}</span>
@@ -66,46 +115,43 @@ function renderizarCarrito() {
       </button>
     `;
 
-    contenedor.appendChild(row);
+    contenedor.appendChild(fila);
   });
 
   totalElem.textContent = "Total: $" + total.toLocaleString();
 
+  // Eventos para botones de eliminar
   const botonesEliminar = contenedor.querySelectorAll(".btn-eliminar");
   botonesEliminar.forEach(btn => {
     btn.addEventListener("click", () => {
       const id = Number(btn.dataset.id);
-      eliminarDelCarrito(id);
+
+      const confirma = confirm("¿Seguro que querés eliminar este producto del carrito?");
+      if (!confirma) return;
+
+      carrito = carrito.filter(item => item.id !== id);
+      guardarCarrito();
+      actualizarContador();
+      renderizarCarrito();
+      mostrarToast("Producto eliminado del carrito", "ok");
     });
   });
 }
 
-function eliminarDelCarrito(id) {
-  carrito = carrito.filter(item => item.id !== id);
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-  actualizarContador();
-  renderizarCarrito();
-  mostrarToast("Producto eliminado", "ok");
-}
-
-function obtenerCantidadTotal() {
-  return carrito.reduce((acc, item) => acc + item.cantidad, 0);
-}
-
-function actualizarContador() {
-  const span = document.getElementById("cart-count");
-  if (!span) return;
-  span.textContent = obtenerCantidadTotal();
-}
-
+// =====================
 // Toast / notificación
+// =====================
+
 function mostrarToast(mensaje, tipo = "ok") {
   const toast = document.getElementById("toast");
-  if (!toast) return;
+  if (!toast) {
+    alert(mensaje); // último recurso
+    return;
+  }
 
   toast.textContent = mensaje;
   toast.classList.remove("hidden", "ok", "error");
-  toast.classList.add(tipo, "show");
+  toast.classList.add("show", tipo);
 
   setTimeout(() => {
     toast.classList.remove("show");
