@@ -1,0 +1,99 @@
+[
+  {
+    "id": 1,
+    "marca": "Samsung",
+    "modelo": "Galaxy S25 Ultra",
+    "precio": 1599999,
+    "imagen": "./img/samsung_s25_ultra.jpg",
+    "descripcion": "Pantalla AMOLED 6.8'', Snapdragon 8 Gen 4, cámara 200 MP, batería 5100 mAh."
+  },
+  {
+    "id": 2,
+    "marca": "Samsung",
+    "modelo": "Galaxy S25+",
+    "precio": 1299999,
+    "imagen": "./img/samsung_s25_plus.jpg",
+    "descripcion": "Pantalla AMOLED 6.7'', Snapdragon 8 Gen 4, 12GB RAM, triple cámara de alta definición."
+  },
+  {
+    "id": 3,
+    "marca": "Samsung",
+    "modelo": "Galaxy S25 FE",
+    "precio": 999999,
+    "imagen": "./img/samsung_s25_fe.jpg",
+    "descripcion": "Pantalla 6.4'', cámara 50 MP, rendimiento equilibrado y excelente autonomía."
+  },
+  {
+    "id": 4,
+    "marca": "Samsung",
+    "modelo": "Galaxy Z Fold 6",
+    "precio": 1999999,
+    "imagen": "./img/samsung_z_fold6.jpg",
+    "descripcion": "Plegable estilo libro con pantalla interna de 7.6'' y multitarea avanzada."
+  },
+  {
+    "id": 5,
+    "marca": "Samsung",
+    "modelo": "Galaxy Z Flip 6",
+    "precio": 1399999,
+    "imagen": "./img/samsung_z_flip6.jpg",
+    "descripcion": "Plegable compacto con pantalla Flex, cámara optimizada y diseño premium."
+  },
+  {
+    "id": 6,
+    "marca": "Samsung",
+    "modelo": "Galaxy S23 Ultra",
+    "precio": 1199999,
+    "imagen": "./img/samsung_s23_ultra.jpg",
+    "descripcion": "Cámara 200 MP, S-Pen integrado, Snapdragon 8 Gen 2 y pantalla 120Hz."
+  },
+
+  {
+    "id": 7,
+    "marca": "Motorola",
+    "modelo": "Edge 60 Pro",
+    "precio": 1299999,
+    "imagen": "./img/motorola_edge60_pro.jpg",
+    "descripcion": "Pantalla pOLED 144Hz, Snapdragon 8 Gen 3, cámara 50 MP y carga súper rápida."
+  },
+  {
+    "id": 8,
+    "marca": "Motorola",
+    "modelo": "Edge 60 Ultra",
+    "precio": 1399999,
+    "imagen": "./img/motorola_edge60_ultra.jpg",
+    "descripcion": "Diseño premium, Snapdragon 8 Gen 3, cámara avanzada con IA y batería de larga duración."
+  },
+  {
+    "id": 9,
+    "marca": "Motorola",
+    "modelo": "Razr 50 Ultra",
+    "precio": 1499999,
+    "imagen": "./img/motorola_razr50_ultra.jpg",
+    "descripcion": "Plegable tipo flip con gran pantalla externa, cámara optimizada y diseño premium."
+  },
+  {
+    "id": 10,
+    "marca": "Motorola",
+    "modelo": "Razr 50",
+    "precio": 1099999,
+    "imagen": "./img/motorola_razr50.jpg",
+    "descripcion": "Plegable accesible con pantalla externa funcional y buena autonomía."
+  },
+  {
+    "id": 11,
+    "marca": "Motorola",
+    "modelo": "Edge 50 Fusion",
+    "precio": 899999,
+    "imagen": "./img/motorola_edge50_fusion.jpg",
+    "descripcion": "Pantalla pOLED 6.7'', procesador Snapdragon serie 7, batería confiable y cámara de 50 MP."
+  },
+  {
+    "id": 12,
+    "marca": "Motorola",
+    "modelo": "Edge 40 Neo",
+    "precio": 799999,
+    "imagen": "./img/motorola_edge40_neo.jpg",
+    "descripcion": "Pantalla 144Hz, diseño delgado, excelente rendimiento y rápida carga."
+  }
+]

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carrito de compras</title>
+
+  <!-- IMPORTANTE: estamos en /pages-->
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="page">
+
+  <!-- NAVBAR -->
+  <header class="header">
+    <nav class="navbar">
+      <div class="logo">
+        <!-- volvemos al index en la raíz -->
+        <a href="../index.html">Mi<span>Tienda</span></a>
+      </div>
+
+      <input type="checkbox" id="menu-toggle">
+      <label class="menu-icon" for="menu-toggle">☰</label>
+
+      <ul class="nav-links">
+        <li><a href="../index.html">Inicio</a></li>
+        <!-- contacto está en la MISMA carpeta /pages -->
+        <li><a href="contacto.html">Contacto</a></li>
+        <li>
+          <!-- carrito está en esta misma carpeta -->
+          <a href="carrito.html" class="active">
+            Carrito (<span id="cart-count">0</span>)
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="carrito-section">
+      <h2>Carrito de compras</h2>
+
+      <div id="cart-items">
+        <!-- items del carrito -->
+      </div>
+
+      <p id="cart-total">Total: $0</p>
+
+      <div class="carrito-acciones">
+        <button id="btn-vaciar-carrito" class="btn-carrito">
+          Vaciar carrito
+        </button>
+        <button id="btn-finalizar" class="btn-carrito secundario">
+          Finalizar compra
+        </button>
+      </div>
+    </section>
+
+    <!-- toast / notificación -->
+    <div id="toast" class="toast hidden"></div>
+  </main>
+
+   <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-logo">
+        <h2>Mi<span>Tienda</span></h2>
+        <p>Productos increíbles a un clic de distancia.</p>
+      </div>
+
+      <div class="footer-links">
+        <h3>Enlaces</h3>
+        <ul>
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="pages/contacto.html">Contacto</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-social">
+        <h3>Seguinos</h3>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.twitter.com/" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      &copy; 2025 MiTienda. Todos los derechos reservados.
+    </div>
+  </footer>
+
+  <script src="../js/index.js"></script>
+</body>
+</html>
+
