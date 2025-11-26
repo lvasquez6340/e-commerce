@@ -120,7 +120,7 @@ function agregarAlCarrito(producto) {
 
 🌐 Demo online (GitHub Pages)
 
-👉 https://TU-USUARIO.github.io/TU-REPO/
+👉 https://lvasquez6340.github.io/e-commerce/
 
 (Reemplazar con el link real cuando lo publiques)
 
@@ -138,5 +138,5 @@ Backend con Node.js (preparado para el curso siguiente)
 
 🙌 Autor
 
-Proyecto desarrollado por Luis Martin Vasquez
+Proyecto desarrollado por Ingeniero Luis Martin Vasquez
 Estudiante de programación y desarrollador en formación.
